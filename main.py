@@ -1,7 +1,8 @@
-from analyser import Analyser
+from Analysers.analyser import Analyser
 
-PATH = 'https://www.bing.com/news/search?q=cd+projekt+red&qft=sortbydate%3d%221%22&form=YFNR'
+
+company = "CD projekt RED"
 
 if __name__ == "__main__":
-    main_analyser = Analyser(PATH)
+    main_analyser = Analyser(company)
     main_analyser.process()
