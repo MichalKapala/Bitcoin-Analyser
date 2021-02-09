@@ -4,6 +4,7 @@ class TextAnalyser:
     def __init__(self, company):
         self.company = company
         self.titles = []
+        self.update_titles()
 
     def update_titles(self):
         hd = Headers(self.company)

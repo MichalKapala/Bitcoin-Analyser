@@ -3,15 +3,16 @@ from urllib.request import urlopen
 import sqlite3
 from datetime import datetime
 
+KEY_PHRASES = {"CD projekt RED": ["Cyberpunk 2077", "CD Projekt RED", "CD Projekt", "Wiedzmin"]}
+
 class Scraper:
-    def __init__(self, company):
+    def __init__(self):
         self.soup = None
-        self.company = company
         self.path = ""
 
-    def create_path(self):
+    def create_path(self, phrase):
         path_root = "https://www.bing.com/news/search?q="
-        for text in self.company.split():
+        for text in phrase.split():
             path_root += text + "+"
         path_root = path_root[:-1]
 
@@ -24,9 +25,9 @@ class Scraper:
             except:
                 print("Cant open site :(")
 
-    def get_titles(self):
+    def get_titles(self, company):
         titles = []
-        self.create_path()
+        self.create_path(company)
         self.open()
 
         if self.soup is not None:
@@ -44,10 +45,11 @@ class Headers:
         self.update_headers()
 
     def update_headers(self):
-        sc = Scraper(self.company)
-        titles = sc.get_titles()
-        if titles:
-            self.save_titles(titles)
+        sc = Scraper()
+        for phrase in KEY_PHRASES[self.company]:
+            titles = sc.get_titles(phrase)
+            if titles:
+                self.save_titles(titles)
 
     def save_titles(self, titles):
         connect = sqlite3.connect("headers.db")
