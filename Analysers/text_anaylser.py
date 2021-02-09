@@ -1,4 +1,4 @@
-from Headers.headers import Headers
+from Scraper.scraper import Headers
 
 class TextAnalyser:
     def __init__(self, company):
