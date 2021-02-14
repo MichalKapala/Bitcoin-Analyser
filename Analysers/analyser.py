@@ -1,5 +1,6 @@
 from Analysers.text_anaylser import TextAnalyser
 
+
 class Analyser:
     def __init__(self, company):
         self.company = company
