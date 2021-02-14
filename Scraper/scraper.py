@@ -3,7 +3,8 @@ from urllib.request import urlopen
 import sqlite3
 from datetime import datetime
 
-KEY_PHRASES = {"CD projekt RED": ["Cyberpunk 2077", "CD Projekt RED", "CD Projekt", "Wiedzmin"]}
+KEY_PHRASES = {"CD projekt RED": ["Cyberpunk 2077", "CD Projekt RED", "CD Projekt", "Witcher", "CDPR"]}
+
 
 class Scraper:
     def __init__(self):
@@ -16,13 +17,13 @@ class Scraper:
             path_root += text + "+"
         path_root = path_root[:-1]
 
-        self.path = path_root + '&qft=sortbydate%3d%221%22&form=YFNR'
+        self.path = path_root + '&qft=sortbydate%3d"1"&form=YFNR&setmkt=en-US'
 
     def open(self):
         with urlopen(self.path) as url:
             try:
                 self.soup = BeautifulSoup(url, 'html.parser')
-            except:
+            except Exception:
                 print("Cant open site :(")
 
     def get_titles(self, company):
@@ -39,27 +40,23 @@ class Scraper:
             print("Nie udalo sie pobrac naglowkow")
         return titles
 
+
 class Headers:
     def __init__(self, company):
         self.company = company
+        self.titles_ = []
         self.update_headers()
+
+    def get_company_phrases(self):
+        pass
+
+    def filter_phrases:
+        pass
 
     def update_headers(self):
         sc = Scraper()
         for phrase in KEY_PHRASES[self.company]:
-            titles = sc.get_titles(phrase)
-            if titles:
-                self.save_titles(titles)
+            self.titles_.extend(sc.get_titles(phrase))
 
-    def save_titles(self, titles):
-        connect = sqlite3.connect("headers.db")
-        c = connect.cursor()
-        c.execute('''CREATE TABLE IF NOT EXISTS headers (company text, date text, header text unique)''')
-        dt_string = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        for title in titles:
-            c.execute('''INSERT OR IGNORE INTO headers VALUES (?,?,?)''', (self.company, dt_string, title))
-        connect.commit()
-        connect.close()
-
-    def get_headers_in_time(self, time_start, time_end):
-        pass
+    def get_headers(self):
+        return self.titles_

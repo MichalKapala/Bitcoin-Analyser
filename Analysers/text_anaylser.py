@@ -1,5 +1,6 @@
 from Scraper.scraper import Headers
 
+
 class TextAnalyser:
     def __init__(self, company):
         self.company = company
