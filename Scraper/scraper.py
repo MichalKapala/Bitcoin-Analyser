@@ -1,9 +1,5 @@
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
-import sqlite3
-from datetime import datetime
-
-KEY_PHRASES = {"CD projekt RED": ["Cyberpunk 2077", "CD Projekt RED", "CD Projekt", "Witcher", "CDPR"]}
 
 
 class Scraper:
@@ -50,13 +46,12 @@ class Headers:
     def get_company_phrases(self):
         pass
 
-    def filter_phrases:
+    def filter_phrases(self):
         pass
 
     def update_headers(self):
         sc = Scraper()
-        for phrase in KEY_PHRASES[self.company]:
-            self.titles_.extend(sc.get_titles(phrase))
+        self.titles_.extend(sc.get_titles(self.company))
 
     def get_headers(self):
         return self.titles_

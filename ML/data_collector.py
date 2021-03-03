@@ -11,7 +11,7 @@ class DataCollector:
         print("Getting titles at ", datetime.now())
         hd = Headers(self.company)
         hd.update_headers()
-        titles = hd.get_titles()
+        titles = hd.get_headers()
         self.save_titles(titles)
 
     def save_titles(self, titles):
@@ -19,17 +19,15 @@ class DataCollector:
         connect = sqlite3.connect("headers.db")
         c = connect.cursor()
         c.execute('''CREATE TABLE IF NOT EXISTS headers (company text, date text, header text unique)''')
-
         for title in titles:
             c.execute('''INSERT OR IGNORE INTO headers VALUES (?,?,?)''', (self.company, dt_string, title))
-
         connect.commit()
         connect.close()
 
 
 if __name__ ==  "__main__":
-    dc = DataCollector("CD projekt RED")
-    schedule.every(10).minutes.do(dc.process)
+    dc = DataCollector("Aptiv")
+    schedule.every(1).minutes.do(dc.process)
     while True:
         try:
             schedule.run_pending()
