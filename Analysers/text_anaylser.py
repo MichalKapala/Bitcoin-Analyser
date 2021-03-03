@@ -15,4 +15,4 @@ class TextAnalyser:
         self.update_titles()
 
     def title_evaluation(self, title):
-        return 0
+        pass

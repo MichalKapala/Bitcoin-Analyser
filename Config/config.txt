@@ -1,0 +1,4 @@
+Company Aptiv
+Ticker APTV
+Peroid 1d
+Interval 5m
