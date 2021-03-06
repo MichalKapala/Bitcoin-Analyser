@@ -10,9 +10,13 @@ class TextAnalyser:
     def update_titles(self):
         hd = Headers(self.company)
         hd.update_headers()
+        self.titles = hd.get_headers()
+
+    def get_titles(self):
+        return self.titles
 
     def calculate_titles_values(self):
-        self.update_titles()
+        pass
 
     def title_evaluation(self, title):
         pass

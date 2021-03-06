@@ -1,4 +1,5 @@
-Company Aptiv
-Ticker APTV
+Company Apple
+Ticker AAPL
 Peroid 1d
-Interval 5m
+Interval 1m
+RSI_peroid 14

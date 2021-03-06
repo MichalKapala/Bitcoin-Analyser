@@ -1,6 +1,6 @@
-from Analysers.analyser import Analyser
+from App.app import App
 
 
 if __name__ == "__main__":
-    main_analyser = Analyser()
-    main_analyser.process()
+    app = App()
+    app.process()
