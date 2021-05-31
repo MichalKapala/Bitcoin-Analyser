@@ -1,0 +1,25 @@
+#mainLayout{
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+#mainHeader{
+    height: 100px;
+    margin-left: 20px;
+    margin-bottom: 0px;
+    margin-top: 50px;
+}
+
+h1{
+    font-family: "Times New Roman", Times, serif;
+}
+
+.dropdown{
+    width: 250px;
+    margin-right: 20px;
+}
+
+#graphDrop{
+    width: 100%;
+    display: flex;
+}

@@ -1,0 +1,5 @@
+Company Apple
+Ticker AAPL
+Peroid 1d
+Interval 1m
+RSI_peroid 14
