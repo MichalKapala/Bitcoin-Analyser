@@ -1,5 +1,4 @@
 from Analysers.stock import Stock
-import plotly.graph_objects as go
 from Analysers.indicators import TechnicalIndicators
 from Scraper.scraper import Headers
 
@@ -15,7 +14,7 @@ class Analyser:
         self.titles_ = {}
         self.headers = Headers(company)
         self.stock = Stock(ticker)
-        self.technical_indicators = TechnicalIndicators()
+        self.technicalIndicators = TechnicalIndicators()
 
     def clear(self):
         self.prices_ = None
@@ -27,11 +26,8 @@ class Analyser:
         self.titles_ = self.headers.get_headers()
         self.stock.update_quotes(interval)
         self.prices_ = self.stock.get_quotes()
-        self.updated_indicators(indicators_list)
-
-    def updated_indicators(self, indicators_list):
-        self.technical_indicators.calculate_indicators(self.prices_)
-        self.indicators_ = self.technical_indicators.get_indicators(indicators_list)
+        self.technicalIndicators.update_indicators(self.prices_)
+        self.indicators_ = self.technicalIndicators.get_indicators(indicators_list)
 
     def get_prices(self):
         return self.prices_
