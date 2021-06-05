@@ -21,10 +21,13 @@ peroid_options = [
 indicators_options = [
     {"label": "Moving Average", "value": "Moving_average"},
     {"label": "Bollinger_bands", "value": "Bollinger_bands"},
+    {"label": "Weighted moving average", "value": "Weighted_MA"},
+    {"label": "Exponential moving average", "value": "Exp_MA"},
 ]
 
-simple_chart_indicators = ["Moving_average"]
+complex_chart_indicators = ["Bollinger_bands"]
 indicators_to_write = ["RSI"]
+simple_chart_indicators = ["Moving_average", "Weighted_MA", "Exp_MA"]
 company = "Bitcoin"  # temporary hardcoded value
 ticker = "BTC-USD"  # temporary hardcoded value
 default_interval = "2m"
@@ -56,7 +59,7 @@ def create_chart(prices: pd.DataFrame, indicators: dict):
             start = index.shape[0] - indicator_data.shape[0]
             index = index[start:]
             fig.add_trace(go.Scatter(x=index, y=indicator_data, mode="lines"))
-        elif indicator == "Bollinger_bands":
+        elif indicator in complex_chart_indicators:
             indicator_data_d = indicators[indicator][0]
             indicator_data_h = indicators[indicator][1]
             start = index.shape[0] - indicator_data_h.shape[0]
