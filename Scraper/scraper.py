@@ -29,7 +29,6 @@ class Headers:
         path_root = path_root[:-1]
 
         self.path = path_root + '&qft=sortbydate%3d"1"&form=YFNR&setmkt=en-US'
-        print(self.path)
 
     def open(self):
         with urlopen(self.path) as url:

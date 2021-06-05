@@ -149,9 +149,10 @@ app.layout = html.Div(
     Input(component_id="indicators_drop", component_property="value"),
 )
 def update_data(n, peroid, indicators_list):
-    analyser.clear()
-    analyser.update(peroid, indicators_list)
-    fig = create_chart(analyser.get_prices(), analyser.get_indicators())
+    if not Analyser.updating:
+        analyser.clear()
+        analyser.update(peroid, indicators_list)
+        fig = create_chart(analyser.get_prices(), analyser.get_indicators())
     return fig
 
 

@@ -6,6 +6,7 @@ simple_chart_indicators = ["Moving_average"]
 
 
 class Analyser:
+    updating = False
     def __init__(self, company, ticker):
         self.company = company
         self.ticker = ticker
@@ -22,12 +23,14 @@ class Analyser:
         self.titles_.clear()
 
     def update(self, interval, indicators_list):
+        self.updating = True
         self.headers.update_headers()
         self.titles_ = self.headers.get_headers()
         self.stock.update_quotes(interval)
         self.prices_ = self.stock.get_quotes()
         self.technicalIndicators.update_indicators(self.prices_)
         self.indicators_ = self.technicalIndicators.get_indicators(indicators_list)
+        self.updating = False
 
     def get_prices(self):
         return self.prices_
