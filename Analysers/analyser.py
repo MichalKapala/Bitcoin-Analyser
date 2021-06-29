@@ -38,6 +38,9 @@ class Analyser:
     def get_indicators(self):
         return self.indicators_
 
+    def get_indicator(self, indicator):
+        return self.indicators_[indicator]
+
     def get_titles(self):
         return self.titles_
 

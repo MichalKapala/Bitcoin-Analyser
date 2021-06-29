@@ -26,7 +26,7 @@ indicators_options = [
 ]
 
 complex_chart_indicators = ["Bollinger_bands"]
-indicators_to_write = ["RSI"]
+constant_indicators = ["RSI"]
 simple_chart_indicators = ["Moving_average", "Weighted_MA", "Exp_MA"]
 company = "Bitcoin"  # temporary hardcoded value
 ticker = "BTC-USD"  # temporary hardcoded value
@@ -34,7 +34,7 @@ default_interval = "2m"
 
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 analyser = Analyser(company, ticker)
-analyser.update(default_interval, indicators_to_write)
+analyser.update(default_interval, constant_indicators)
 
 
 def create_chart(prices: pd.DataFrame, indicators: dict):
@@ -72,13 +72,13 @@ def create_chart(prices: pd.DataFrame, indicators: dict):
     return fig
 
 
-def create_indicators_component(indicators: dict):
+def create_const_ind_comp(indicators):
     indicators_list = []
     component = lambda ind, value: html.Div(
         children=[html.P(children="{}: {}".format(ind, str(value))), html.Br()]
     )
-    for key, value in indicators.items():
-        indicators_list.append(component(key, value))
+    for key in indicators:
+        indicators_list.append(component(key, analyser.get_indicator(key)))
     return indicators_list
 
 
@@ -116,11 +116,17 @@ dropdownDiv = html.Div(
     id="graphDrop",
 )
 fig = create_chart(analyser.get_prices(), analyser.get_indicators())
+
+indicatorsDiv = html.Div(
+    create_const_ind_comp(constant_indicators), id="indicatorsDiv"
+)
+
 graphDiv = html.Div(
     [dropdownDiv, dcc.Graph(id="main_graph", figure=fig)], id="graphDiv"
 )
 
 mainDiv = html.Div([graphDiv])
+
 app.layout = html.Div(
     [
         headerDiv,
@@ -129,6 +135,7 @@ app.layout = html.Div(
             children="Technical analysis",
         ),
         html.Div(id="tech_anal;", children=[]),
+        indicatorsDiv,
         html.Br(),
         html.H2(
             children="Headers",
@@ -145,16 +152,25 @@ app.layout = html.Div(
 
 @app.callback(
     Output(component_id="main_graph", component_property="figure"),
+    Output(component_id="indicatorsDiv", component_property="children"),
     Input(component_id="interval-component", component_property="'n_intervals'"),
     Input(component_id="peroid_drop", component_property="value"),
     Input(component_id="indicators_drop", component_property="value"),
 )
 def update_data(n, peroid, indicators_list):
     if not Analyser.updating:
+        update_ind = []
+        if type(indicators_list) == list:
+            update_ind = indicators_list + constant_indicators
+        else:
+            update_ind = constant_indicators
         analyser.clear()
-        analyser.update(peroid, indicators_list)
+        analyser.update(peroid, update_ind)
         fig = create_chart(analyser.get_prices(), analyser.get_indicators())
-    return fig
+        indicatorsDiv = html.Div(
+            create_const_ind_comp(constant_indicators), id="indicatorsDiv"
+        )
+    return fig, indicatorsDiv
 
 
 def process():
