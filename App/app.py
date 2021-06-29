@@ -26,7 +26,7 @@ indicators_options = [
 ]
 
 complex_chart_indicators = ["Bollinger_bands"]
-constant_indicators = ["RSI"]
+constant_indicators = ["RSI", "Stochastic_osc"]
 simple_chart_indicators = ["Moving_average", "Weighted_MA", "Exp_MA"]
 company = "Bitcoin"  # temporary hardcoded value
 ticker = "BTC-USD"  # temporary hardcoded value

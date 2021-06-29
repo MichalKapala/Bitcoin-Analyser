@@ -10,6 +10,7 @@ class TechnicalIndicators:
     def update_indicators(self, data):
         self.indicators_.clear()
         self.indicators_["RSI"] = self.calculate_rsi(data)
+        self.indicators_["Stochastic_osc"] = self.calculate_stochastic_oscilator(data)
         self.indicators_["Moving_average"] = self.calculate_moving_average(data)
         self.indicators_["Bollinger_bands"] = self.calculate_bb(data)
         self.indicators_["Weighted_MA"] = self.calculate_weighted_moving_average(data)
@@ -98,3 +99,11 @@ class TechnicalIndicators:
         rsi = 100 - (100 / (1+rs))
 
         return rsi
+
+    def calculate_stochastic_oscilator(self, data):
+        min = data.Close[-self.no_elements:].min()
+        max = data.Close[-self.no_elements:].max()
+        curr = data.Close[-1]
+        stoch_osc = 100*(curr - min)/(max - min)
+
+        return stoch_osc
