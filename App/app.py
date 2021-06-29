@@ -31,6 +31,7 @@ simple_chart_indicators = ["Moving_average", "Weighted_MA", "Exp_MA"]
 company = "Bitcoin"  # temporary hardcoded value
 ticker = "BTC-USD"  # temporary hardcoded value
 default_interval = "2m"
+
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 analyser = Analyser(company, ticker)
 analyser.update(default_interval, indicators_to_write)
@@ -118,19 +119,16 @@ fig = create_chart(analyser.get_prices(), analyser.get_indicators())
 graphDiv = html.Div(
     [dropdownDiv, dcc.Graph(id="main_graph", figure=fig)], id="graphDiv"
 )
-indicatorsDiv = html.Div(
-    create_indicators_component(analyser.get_indicators()), id="indicatorsDiv"
-)
+
 mainDiv = html.Div([graphDiv])
 app.layout = html.Div(
     [
         headerDiv,
         mainDiv,
         html.H2(
-            children="Indicators",
+            children="Technical analysis",
         ),
-        html.Div(id="indicators", children=[]),
-        indicatorsDiv,
+        html.Div(id="tech_anal;", children=[]),
         html.Br(),
         html.H2(
             children="Headers",
